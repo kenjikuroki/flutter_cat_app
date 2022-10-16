@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_application_1/pages/model/user.dart';
+import 'package:flutter_application_1/model/user.dart';
+import 'package:flutter_application_1/pages/talk_room_page.dart';
 
 class TopPage extends StatefulWidget {
   const TopPage({super.key});
@@ -32,35 +33,44 @@ class _TopPageState extends State<TopPage> {
       body: ListView.builder(
           itemCount: userList.length,
           itemBuilder: (contesxt, index) {
-            return SizedBox(
-              height: 70,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: userList[index].imagePath == null
-                          ? null
-                          : NetworkImage(userList[index].imagePath!),
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TalkRoomPage(userList[index].name)));
+              },
+              child: SizedBox(
+                height: 70,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: userList[index].imagePath == null
+                            ? null
+                            : NetworkImage(userList[index].imagePath!),
+                      ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        userList[index].name,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        userList[index].lastMessage,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  )
-                ],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          userList[index].name,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          userList[index].lastMessage,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             );
           }),
